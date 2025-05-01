@@ -2,26 +2,121 @@
 using System.Collections.Generic;
 using System.Linq;
 
-Console.WriteLine("Lab5 C# ");
-AnyFunc();
+Console.WriteLine("Lab5 C# - Demonstration of All Classes");
+Console.WriteLine("======================================");
 
-void AnyFunc()
-{
-    Console.WriteLine(" Some function in top-level");
-}
-Console.WriteLine("Problems 1 ");
-AnyFunc();
+// User class demonstration
+Console.WriteLine("\n1. User Classes Demonstration");
+Console.WriteLine("----------------------------");
 UserClass cl = new UserClass();
-cl.Name = " UserClass top-level ";
+cl.Name = "UserClass top-level";
+Console.WriteLine($"Top-level UserClass name: {cl.Name}");
+
 User.UserClass cl2 = new();
-cl2.Name = " UserClass namespace User ";
+cl2.Name = "UserClass namespace User";
+Console.WriteLine($"Namespaced UserClass name: {cl2.Name}");
+
+// TransportHierarchy demonstration
+Console.WriteLine("\n2. Transport Hierarchy Demonstration");
+Console.WriteLine("----------------------------------");
+Console.WriteLine("\nCreating and using TransportVehicle:");
+TransportHierarchy.TransportVehicle vehicle = new TransportHierarchy.TransportVehicle("Generic Vehicle", 100, 50);
+vehicle.Show();
+
+Console.WriteLine("\nCreating and using Car:");
+TransportHierarchy.Car car = new TransportHierarchy.Car("Toyota Corolla", 180, 5, "Gasoline");
+car.Show();
+
+Console.WriteLine("\nCreating and using Train:");
+TransportHierarchy.Train train = new TransportHierarchy.Train("Express Train", 200, 200, 10);
+train.Show();
+
+Console.WriteLine("\nCreating and using Express:");
+TransportHierarchy.Express express = new TransportHierarchy.Express("Bullet Train", 300, 150, 8, "Tokyo-Osaka");
+express.Show();
+
+// Copy constructor demonstration
+Console.WriteLine("\nUsing copy constructor for Car:");
+TransportHierarchy.Car carCopy = new TransportHierarchy.Car(car);
+carCopy.Name = "Toyota Corolla Copy";
+carCopy.Show();
+
+// Geometry demonstration
+Console.WriteLine("\n3. Geometry Classes Demonstration");
+Console.WriteLine("-------------------------------");
+Console.WriteLine("\nCreating and calculating Rectangle properties:");
+Geometry.Rectangle rectangle = new Geometry.Rectangle(5, 10);
+rectangle.Show();
+
+Console.WriteLine("\nCreating and calculating Circle properties:");
+Geometry.Circle circle = new Geometry.Circle(7);
+circle.Show();
+
+Console.WriteLine("\nCreating and calculating Triangle properties:");
+Geometry.Triangle triangle = new Geometry.Triangle(3, 4, 5);
+triangle.Show();
+
+// Storing figures in a collection
+Console.WriteLine("\nStoring different figures in a collection:");
+List<Geometry.Figure> figures = new List<Geometry.Figure>
+{
+    new Geometry.Rectangle(8, 4),
+    new Geometry.Circle(5),
+    new Geometry.Triangle(5, 5, 5)
+};
+
+Console.WriteLine("\nIterating through the collection of figures:");
+foreach (var figure in figures)
+{
+    figure.Show();
+}
+
+// VideoCassettes demonstration
+Console.WriteLine("\n4. VideoCassettes Demonstration");
+Console.WriteLine("-----------------------------");
+List<VideoCassettes.VideoCassette> cassettes = new List<VideoCassettes.VideoCassette>
+{
+    new VideoCassettes.VideoCassette("The Shawshank Redemption", "Frank Darabont", 142, 15.99m),
+    new VideoCassettes.VideoCassette("The Godfather", "Francis Ford Coppola", 175, 19.99m),
+    new VideoCassettes.VideoCassette("Pulp Fiction", "Quentin Tarantino", 154, 12.99m),
+    new VideoCassettes.VideoCassette("Fight Club", "David Fincher", 139, 9.99m)
+};
+
+Console.WriteLine("\nOriginal List of Video Cassettes:");
+foreach (var cassette in cassettes)
+{
+    cassette.Show();
+}
+
+// Filter cassettes by price
+decimal priceThreshold = 15.00m;
+var filteredCassettes = cassettes.Where(c => c.Price <= priceThreshold).ToList();
+
+Console.WriteLine($"\nCassettes with price below ${priceThreshold}:");
+foreach (var cassette in filteredCassettes)
+{
+    cassette.Show();
+}
+
+// Add new cassettes
+Console.WriteLine("\nAdding new cassettes to the collection:");
+filteredCassettes.Add(new VideoCassettes.VideoCassette("The Matrix", "Wachowski Brothers", 136, 14.99m));
+filteredCassettes.Add(new VideoCassettes.VideoCassette("Inception", "Christopher Nolan", 148, 13.99m));
+
+Console.WriteLine("\nUpdated collection of cassettes:");
+foreach (var cassette in filteredCassettes)
+{
+    cassette.Show();
+}
+
+Console.WriteLine("\nEnd of demonstration.");
 
 namespace User
 {
     class UserClass
     {
-        public string Name { get; set; }
-       public  UserClass()
+        public string Name { get; set; } = string.Empty; // Initialize with default value
+        public UserClass()
         {
             Name = "NoName";
         }
@@ -33,14 +128,14 @@ namespace User
 }
 class UserClass
 {
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty; // Initialize with default value
 }
 
 namespace TransportHierarchy
 {
     public class TransportVehicle
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty; // Initialize with default value
         public int MaxSpeed { get; set; }
         public int Capacity { get; set; }
 
@@ -78,7 +173,7 @@ namespace TransportHierarchy
 
     public class Car : TransportVehicle
     {
-        public string FuelType { get; set; }
+        public string FuelType { get; set; } = string.Empty; // Initialize with default value
 
         public Car() : base()
         {
@@ -146,7 +241,7 @@ namespace TransportHierarchy
 
     public class Express : Train
     {
-        public string Route { get; set; }
+        public string Route { get; set; } = string.Empty; // Initialize with default value
 
         public Express() : base()
         {
@@ -298,45 +393,6 @@ namespace VideoCassettes
         public void Show()
         {
             Console.WriteLine($"Title: {Title}, Director: {Director}, Duration: {Duration} mins, Price: {Price:C}");
-        }
-    }
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            List<VideoCassette> cassettes = new List<VideoCassette>
-            {
-                new VideoCassette("Movie A", "Director A", 120, 15.99m),
-                new VideoCassette("Movie B", "Director B", 90, 9.99m),
-                new VideoCassette("Movie C", "Director C", 150, 19.99m),
-                new VideoCassette("Movie D", "Director D", 110, 5.99m)
-            };
-
-            Console.WriteLine("Original List of Video Cassettes:");
-            foreach (var cassette in cassettes)
-            {
-                cassette.Show();
-            }
-
-            decimal priceThreshold = 10.00m;
-            cassettes = cassettes.Where(c => c.Price <= priceThreshold).ToList();
-
-            Console.WriteLine("\nAfter Removing Cassettes with Price Above $10:");
-            foreach (var cassette in cassettes)
-            {
-                cassette.Show();
-            }
-
-            cassettes.Add(new VideoCassette("Movie E", "Director E", 100, 7.99m));
-            cassettes.Add(new VideoCassette("Movie F", "Director F", 130, 8.99m));
-            cassettes.Add(new VideoCassette("Movie G", "Director G", 140, 6.99m));
-
-            Console.WriteLine("\nAfter Adding 3 New Cassettes:");
-            foreach (var cassette in cassettes)
-            {
-                cassette.Show();
-            }
         }
     }
 }
